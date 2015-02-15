@@ -1,0 +1,8 @@
+name: Trumpet
+main: us.corenetwork.trumpet.TrumpetPlugin
+version: 1.0.0
+author: [matejdro, ginaw]
+commands:
+    trumpet:
+        description: Main command
+    
