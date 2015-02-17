@@ -49,7 +49,7 @@ public class IO {
 		ladderGroups = config.getStringList(Setting.RANKS_LADDER.getString());
 
 		Announcer.clear();
-		for(Object o : config.getList("Announcements"))
+		for(Object o : config.getList("Announcements", new ArrayList()))
 		{
 			HashMap cs = (HashMap) o;
 			announcementGroups.add(cs.get("anno"));
