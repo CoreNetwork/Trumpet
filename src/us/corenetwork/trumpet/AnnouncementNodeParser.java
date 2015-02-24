@@ -1,17 +1,17 @@
 package us.corenetwork.trumpet;
 
-import com.avaje.ebeaninternal.server.autofetch.Statistics;
+import mkremins.fanciful.FancyMessage;
 import net.minecraft.server.v1_8_R1.StatisticList;
-import net.minecraft.server.v1_8_R1.StatisticManager;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.craftbukkit.v1_8_R1.CraftStatistic;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Matej on 12.1.2014.
@@ -19,6 +19,8 @@ import java.util.List;
 public class AnnouncementNodeParser extends NodeParser {
     private int announcementGroup;
     private Player messagingPlayer;
+
+    private final static Pattern BUTTON_PATTERN = Pattern.compile("(.*)(<[a-zA-Z0-9\\-]*>)(.*)");
 
     public AnnouncementNodeParser(int announcementGroup, Player messagingPlayer) {
         this.announcementGroup = announcementGroup;
@@ -51,8 +53,33 @@ public class AnnouncementNodeParser extends NodeParser {
             String message = (String) node;
             if (!message.trim().isEmpty())
             {
-                message = Settings.getString(Setting.MESSAGE_PREFIX) + message;
-                Util.Message(message, messagingPlayer);
+                Matcher matcher = BUTTON_PATTERN.matcher(message);
+                if(matcher.matches())
+                {
+                    FancyMessage fancyMessage = new FancyMessage("");
+
+                    String pre = matcher.group(1);
+                    String button = matcher.group(2);
+                    String buttonName = button.substring(1, button.length()-1);
+                    String post = matcher.group(3);
+
+                    fancyMessage = fancyMessage.then(ChatColor.translateAlternateColorCodes('&', Settings.getString(Setting.MESSAGE_PREFIX) + pre));
+                    if(ButtonManager.isButton(buttonName))
+                    {
+                        fancyMessage = ButtonManager.getButton(buttonName, fancyMessage);
+                    }
+                    else
+                    {
+                        fancyMessage = fancyMessage.then(ChatColor.translateAlternateColorCodes('&', Settings.getString(Setting.MESSAGE_PREFIX) + button));
+                    }
+
+                    fancyMessage = fancyMessage.then(ChatColor.translateAlternateColorCodes('&', Settings.getString(Setting.MESSAGE_PREFIX) + post));
+                    fancyMessage.send(messagingPlayer);
+                }
+                else
+                {
+                    Util.Message(Settings.getString(Setting.MESSAGE_PREFIX) + message, messagingPlayer);
+                }
             }
 
             stopParsing();

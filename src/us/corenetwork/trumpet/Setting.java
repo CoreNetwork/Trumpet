@@ -2,6 +2,7 @@ package us.corenetwork.trumpet;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public enum Setting {
 	
@@ -15,6 +16,22 @@ public enum Setting {
 
 	MESSAGE_NO_PERMISSION("Messages.NoPermission", "No permission!"),
 	MESSAGE_CONFIGURATION_RELOADED("Messages.ConfigurationReloaded", "Configuration reloaded successfully!"),
+
+	BUTTON_FORMAT_LEFT("ButtonFormat.Left", "&6["),
+	BUTTON_FORMAT_RIGHT("ButtonFormat.Right", "&6]"),
+	BUTTON_FORMAT_TEXT_COLOR("ButtonFormat.TextColor", "&5"),
+
+	BUTTONS("Buttons", new HashMap<String, Object>(){{
+		put("reddit-flatcore", new HashMap<String, Object>(){{
+			put("label", "/r/flatcore");
+			put("hover", new ArrayList<String>(){{
+				add("&7Click to visit our subreddit");
+				add("&8Make sure to subscribe!");
+			}});
+			put("action", "http://www.reddit.com/r/flatcore");
+		}});
+	}}),
+
 
 	RANKS_SPECIAL("Ranks.Special", new ArrayList<String>(){{
 		add("Guardian");

@@ -54,6 +54,8 @@ public class IO {
 			HashMap cs = (HashMap) o;
 			announcementGroups.add(cs.get("anno"));
 		}
+
+		ButtonManager.init();
 	}
 
 	public static void saveConfig()

@@ -27,8 +27,12 @@ public class Announcer {
     {
         for (Player player : Bukkit.getOnlinePlayers())
         {
-            int announcementGroup = getNextAnnouncementForPlayer(player.getUniqueId());
-            new AnnouncementNodeParser(announcementGroup, player).parse();
+            Integer announcementGroup = getNextAnnouncementForPlayer(player.getUniqueId());
+
+            if(announcementGroup != null)
+            {
+                new AnnouncementNodeParser(announcementGroup, player).parse();
+            }
         }
     }
 
@@ -36,10 +40,16 @@ public class Announcer {
     {
         List<Integer> queue = playerAnnouncementQueue.get(uuid);
 
-        if(queue == null)
+        if(queue == null || queue.isEmpty())
         {
             queue = generateNewQueue();
             playerAnnouncementQueue.put(uuid, queue);
+        }
+
+        //if at this point in time there were no announcements in config (can happen due to reload), return null
+        if(queue == null || queue.isEmpty())
+        {
+            return null;
         }
 
         int nextGroup = queue.get(0);
