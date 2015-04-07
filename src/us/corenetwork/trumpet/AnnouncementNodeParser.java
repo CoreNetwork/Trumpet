@@ -142,7 +142,7 @@ public class AnnouncementNodeParser extends NodeParser {
             Statistic statistic = CraftStatistic.getBukkitStatisticByName(variable);
 
 
-            net.minecraft.server.v1_8_R1.Statistic nmsStat = StatisticList.getStatistic(variable);
+            net.minecraft.server.v1_8_R2.Statistic nmsStat = StatisticList.getStatistic(variable);
 
 
             if(statistic != null && nmsStat != null)
