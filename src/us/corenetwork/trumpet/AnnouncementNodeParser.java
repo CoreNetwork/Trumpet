@@ -1,11 +1,11 @@
 package us.corenetwork.trumpet;
 
 import mkremins.fanciful.FancyMessage;
-import net.minecraft.server.v1_8_R1.StatisticList;
+import net.minecraft.server.v1_8_R3.StatisticList;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
-import org.bukkit.craftbukkit.v1_8_R1.CraftStatistic;
+import org.bukkit.craftbukkit.v1_8_R3.CraftStatistic;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
